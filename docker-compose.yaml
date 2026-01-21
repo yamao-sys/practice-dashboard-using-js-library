@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    container_name: client
+    ports:
+      - 4000:3000
+      - 4100:3100
+    volumes:
+      - ./client:/app
+    restart: always
+    tty: true
+    stdin_open: true
+    command: "bash entrypoint.sh"
