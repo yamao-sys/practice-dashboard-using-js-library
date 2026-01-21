@@ -1,0 +1,68 @@
+openapi: 3.1.0
+info:
+  title: Request Form App Service
+  version: '1.0'
+  description: request form app APIs
+tags:
+  - name: users
+paths:
+  /users/sign-in:
+    post:
+      operationId: post-user-sign-in
+      summary: User Sign In
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          headers:
+            Set-Cookie:
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSignInResponse'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSignInResponse'
+        '500':
+          description: Server error
+      tags:
+        - users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSignInInput'
+components:
+  schemas:
+    UserSignInInput:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      title: User SignIn Input
+    UserSignInResponse:
+      type: object
+      required:
+        - token
+        - error
+      properties:
+        token:
+          type: string
+        error:
+          type: string
+      title: User SignIn Response
+servers:
+  - url: https://localhost:4000
+    variables: {}
